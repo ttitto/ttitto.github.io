@@ -1,16 +1,17 @@
 'use strict';
 //GLOBALS
-var mainContainer,
+var mainContainer, //the container of the game, like wrapper
     boardContainer,
-    board,
+    board,//the container of the tiles
     boardId = 'board',
     boardContainerID = 'boardCont',
     currentLvl = 3, // 3 is the starting level
     tilesCounter = 1, //Counter to hold the revealed answers
     levelBonus = 5, //holds the points that will be added if the level succeeds
-    cellSize = 50,
-    pointsForCorrectAnswer = 10,
-    wasLevelCleared = true,
+    cellSize = 50, //the size of the tiles
+    pointsForCorrectAnswer = 10, // the points that a click on a correct tile gives
+    wasLevelCleared = true, //holds the result of the level end
+    playerCanClick = true, //holds if a player can click on the fields
     minRowsSize = 2,
     minCellsSize = 2,
     initCellsSize = 3,
@@ -21,15 +22,19 @@ var mainContainer,
     answers = '',
     trials = 15, //how many trials user has
     score = 0, //user score
-    beforeHideCellsTimeout = 2000,
-    correctAnswerTimeout = 600,
-    board = null,
+    beforeHideCellsTimeout = 1500,
+    correctAnswerTimeout = 500,
+    infoBoxTimeout = 300,
+    betweenLevelsTimeout = 2000,
     popup = null,
-    storage = window.localStorage;//holds the browsers local storage
+    canClickOnInfoBox = true, // if "false" the next level will start automatically
+    storage = window.localStorage; //holds the browsers local storage
 
+//holds the sizes of the board depending on the current level
 var boardDimArray = [[2, 2], [2, 2], [3, 3], [4, 3], [4, 4], [5, 4], [5, 5], [6, 5], [6, 6]];
 
 var MESSAGES = {
+    //holds the messages that appear below the game board
     levelLost: 'Sorry, you missed!\nTry again with less tiles!',
     tileSucess: 'You hit it right! Guess the next tile!',
     levelSuccess: 'Congratulations! You won another level.\nTry with more tiles!',
@@ -37,12 +42,15 @@ var MESSAGES = {
     gameOver: 'GAME OVER!',
     scoreMessage: 'Your score is: ',
     payAttention: 'Remember the tiles positions!',
-    bestResult: 'Your result will be stored as BEST RESULT.\nCongratulations!'
+    bestResult: 'Your result will be stored as BEST RESULT.\nCongratulations!',
+    newGame: 'New game',
+    startGameMsg: 'Start Game',
+    startGame: 'Memory Matrix',
+    teamName: 'by Desert Planet'
 };
 
 
-var ScoreBoardElement = function (imgURL, content, val) {
-    this.imgURL = imgURL;
+var ScoreBoardElement = function (content, val) {
     this.content = content;
     this.val = val;
 };
@@ -59,15 +67,16 @@ function createBackground() {
 }
 
 function createScoreBoard() {
+    //creates the score board at the top of the main container and fills it with elements
     var scoreBoard = document.createElement('div');
     scoreBoard.id = 'score-board';
     mainContainer.appendChild(scoreBoard);
     var scoreBoardList = document.createElement('ul');
     scoreBoard.appendChild(scoreBoardList);
 
-    var categories = [new ScoreBoardElement('', 'Tiles', getLvl()),
-        new ScoreBoardElement('', 'Trials', trials),
-        new ScoreBoardElement('', 'Score', score)];
+    var categories = [new ScoreBoardElement('Tiles', getLvl()),
+        new ScoreBoardElement('Trials', trials),
+        new ScoreBoardElement('Score', score)];
 
     var categoriesSize = categories.length;
     for (var i = 0; i < categoriesSize; i++) {
@@ -94,8 +103,22 @@ function addPoints(tilePts, levelPts) {
     score = parseInt(score) + parseInt(tilePts) + parseInt(levelPts);
     scoreSpan.innerText = score;
     scoreSpan.textContent = score;
+
+    function blinkingScore() {
+        //appends a class to the score element that makes it blink when new points are added
+        var scoreBySpan = document.getElementById("Score");
+        scoreBySpan.classList.add("blinkingScore");
+
+        setTimeout(function () {
+            $('#Score').removeClass('blinkingScore');
+        }, 500);
+    }
+
+    blinkingScore();
 }
+
 function updateLevelBonus(direction) {
+    //increases or decreases the bonus points amount depending on the success of the level
     switch (direction) {
         case 'down':
             if (levelBonus > 5) {
@@ -109,45 +132,54 @@ function updateLevelBonus(direction) {
 }
 function getUserClick(event) {
     // This function handles the player click
-    var element = event.target;
-    // var selectedCellID = element.getAttribute('id');
-    var isClicked = (element.getAttribute('data-is-clicked')) ? true : false;
-    if (element.getAttribute('data-is-true') && !isClicked) {
-        var currLevel = getLvl();
-        if (tilesCounter < currLevel) {
-            element.setAttribute('data-is-clicked', 'true');
-            tilesCounter++;
-            addPoints(pointsForCorrectAnswer);
-            element.setAttribute('data-is-true', 'false');
+    if (playerCanClick === true) {
+        var element = event.target;
+        var isClicked = (element.getAttribute('data-is-clicked')) ? true : false;
+        if (element.getAttribute('data-is-true') && !isClicked) {
+            //if the right tile was clicked
+            var currLevel = getLvl();
+            if (tilesCounter < currLevel) {
+                //if there are other hidden tile to reveal
+                element.setAttribute('data-is-clicked', 'true');
+                tilesCounter++;
+                addPoints(pointsForCorrectAnswer);
+                updateInfobox(MESSAGES.tileSucess);
+                element.setAttribute('data-is-true', 'false');
 
-        } else if (tilesCounter === currLevel) {
-            element.setAttribute('data-is-clicked', 'true');
-            updateInfobox(MESSAGES.levelSuccess);
-            wasLevelCleared = true;
-            addPoints(pointsForCorrectAnswer, levelBonus);
-            element.setAttribute('data-is-true', 'false');
-            prepAndShowInfoForNextLvl();
-            updateLevelBonus('up');
-        }
-    } else if (isClicked) {
-        return;
-    } else {
-        element.classList.add('incorrectAnswer');
-        updateLevelBonus('down');
-        setTimeout(function () {
-            updateInfobox(MESSAGES.levelLost);
+            } else if (tilesCounter === currLevel) {
+                //if last tile was revealed
+                element.setAttribute('data-is-clicked', 'true');
+                wasLevelCleared = true;
+                updateLevelBonus('up');
+                addPoints(pointsForCorrectAnswer, levelBonus);
+                element.setAttribute('data-is-true', 'false');
+
+                setTimeout(function () {
+                    updateInfobox(MESSAGES.levelSuccess);
+                    prepAndShowInfoForNextLvl();
+                }, infoBoxTimeout);
+            }
+        } else if (isClicked) {
+            // Intentionally left blank
+        } else {
+            //if an incorrect tile was clicked
+            element.classList.add('incorrectAnswer');
+            updateLevelBonus('down');
+            playerCanClick = false;
             wasLevelCleared = false;
-            prepAndShowInfoForNextLvl();
-        }, 500);
-    }
 
+            updateInfobox(MESSAGES.levelLost);
+            prepAndShowInfoForNextLvl();
+        }
+    }
 }
 
 function goToNextLvl() {
+    playerCanClick = true;
     if (trials) {
         //update trials in scoreboard
         trials--;
-        document.getElementById('Trials').innerHTML = trials;
+        document.getElementById('Trials').innerHTML = trials.toString();
 
         //update Tiles in scoreboard
         document.getElementById('Tiles').innerHTML = getLvl();
@@ -155,7 +187,7 @@ function goToNextLvl() {
         //clear counter
         tilesCounter = 1;
 
-        //generate new board => Chech which is the current level and calc the board cells and rows
+        //generate new board => Check which is the current level and calc the board cells and rows
         var currLvl = getLvl();
         var board = (currLvl <= boardDimArray.length) ? (currLvl - 1) : (boardDimArray.length - 1);
 
@@ -163,12 +195,13 @@ function goToNextLvl() {
         createBoard(boardDimArray[board][0], boardDimArray[board][1]);
         updateInfobox(MESSAGES.payAttention);
     } else {
-        //GAME OVER - no more trials. Function for displaying GAME OVER Screen here        
+        //GAME OVER - no more trials. Function for displaying GAME OVER Screen     
         endGame();
     }
 }
 
 function updatePopupSize(width, height) {
+    //defines the styles about sizing of the popup that shows the current level result between the levels
     if (popup) {
         width = width || board.offsetWidth;
         height = height || board.offsetHeight;
@@ -180,15 +213,17 @@ function updatePopupSize(width, height) {
 }
 
 function updateBoardAndPopupSizes(cells, rows) {
-    var width = (cells * cellSize) + boardPadding;
-    var height = (rows * cellSize) + boardPadding;
-    board.style.width = width + 'px';
-    board.style.height = height + 'px';
 
-    updatePopupSize(width, height);
+    var boardWidth = (cells * cellSize) + boardPadding;
+    var boardHeight = (rows * cellSize) + boardPadding;
+
+    $("#board").animate({width: boardWidth, height: boardHeight}, 100);
+
+    updatePopupSize(boardWidth, boardHeight);
 }
 
 function createBoard(cells, rows) {
+    //creates the board with given rows and columns arguments
     if (cells) {
         cells = ((cells) && (cells > minCellsSize)) ? ((cells < maxCellsSize) ? cells : maxCellsSize) : minCellsSize;
     } else {
@@ -200,13 +235,10 @@ function createBoard(cells, rows) {
         rows = initRowsSize;
     }
 
-    if (!board) {
-        boardContainer = document.createElement('div');
-        boardContainer.id = boardContainerID;
-        mainContainer.appendChild(boardContainer);
-
+    if(!board) {
         board = document.createElement('div');
         board.id = boardId;
+        boardContainer.innerHTML = '';
         boardContainer.appendChild(board);
     }
 
@@ -215,6 +247,7 @@ function createBoard(cells, rows) {
     updateBoardAndPopupSizes(cells, rows);
 
     setTimeout(function () {
+        //generates the tile fields in the board
         for (var i = 1; i <= rows; i++) {
             var row = document.createElement('div');
             row.setAttribute('id', 'row' + i);
@@ -227,24 +260,26 @@ function createBoard(cells, rows) {
             }
             board.appendChild(row);
         }
-        assignCorrectAnswers(getLvl());
+        assignCorrectAnswers();
     }, correctAnswerTimeout);
 }
 
 function createInfoBox() {
+    //creates an info box for user advices during the game
     var infobox = document.createElement('div');
     infobox.id = 'infobox';
     mainContainer.appendChild(infobox);
 }
 
 function updateInfobox(occasion) {
+    //changes the content of the infobox depending on the passed as argument situation
     var infobox = document.getElementById('infobox');
     infobox.innerText = occasion;
     infobox.textContent = occasion;
 }
 
-function assignCorrectAnswers(level) {
-
+function assignCorrectAnswers() {
+    var level = getLvl();
     var assignedIndexes = [],
         selectedCells = [],
         cellsArray = document.getElementsByClassName('cell'),
@@ -253,7 +288,7 @@ function assignCorrectAnswers(level) {
     var getRandomNumber = function () {
         return Math.floor(Math.random() * cellsArray.length);
     };
-
+    //assigns attributes until the necessary count of busy tiles has been reached
     for (var i = 0; i < level; i++) {
         canContinue = true;
 
@@ -269,7 +304,6 @@ function assignCorrectAnswers(level) {
         }
     }
 
-    answers = (answers !== '') ? answers : '';
     answers = assignedIndexes.toString();
 
     //show the pattern to player
@@ -277,13 +311,13 @@ function assignCorrectAnswers(level) {
         selectedCells[j].classList.add('openAnswer');
     }
 
-    //hide the pattern and assign onClick event listener     
     setTimeout(function () {
         hidePattern(selectedCells);
     }, beforeHideCellsTimeout);
 }
 
 function hidePattern(selectedCellsPattern) {
+    //hides the pattern and assigns onClick event listener     
     for (var k = 0; k < selectedCellsPattern.length; k++) {
         selectedCellsPattern[k].classList.remove('openAnswer');
     }
@@ -300,6 +334,7 @@ function closePopup() {
 }
 
 function updateCurrentLvl() {
+    //changes the current level depending on the previous level result
     if (wasLevelCleared === true) {
         currentLvl++;
     } else if (currentLvl > 1) {
@@ -308,14 +343,17 @@ function updateCurrentLvl() {
 }
 
 function prepAndShowInfoForNextLvl() {
+
     var msg = document.getElementById('infoDialogTxt');
     if (!popup) {
         popup = document.createElement('div');
-        msg = document.createElement('span');
+        msg = document.createElement('p');
         msg.id = 'infoDialogTxt';
 
         popup.setAttribute('id', 'popup');
-        popup.addEventListener('click', closePopup, false);
+        if (canClickOnInfoBox === true) {
+            popup.addEventListener('click', closePopup, false);
+        }
         boardContainer.appendChild(popup);
         popup.appendChild(msg);
     }
@@ -324,16 +362,24 @@ function prepAndShowInfoForNextLvl() {
 
     var msgText = '';
     if (wasLevelCleared) {
-        msgText += 'Bonus Points: +' + levelBonus + '<br />';
+        msgText += 'Bonus Points: <span class="green">+' + levelBonus + '</span><br />';
     }
-    msgText += 'Next: ' + getLvl() + ' tiles';
+    msgText += 'Next: <span class="red">' + getLvl() + '</span> tiles';
     msg.innerHTML = msgText;
 
     popup.classList.add('opened');
     updatePopupSize();
+
+    if (canClickOnInfoBox !== true) {
+        setTimeout(function () {
+            closePopup();
+        }, betweenLevelsTimeout);
+    }
 }
 
 function storeMaxScore(currentScore) {
+    //creates a local storage if it doesnt exist and saves the current result if any bigger score hasn't been saved
+    //returns true if the current score is the maximal until the moment
     if (typeof (storage) !== 'undefined') {
         if (typeof (storage.maxScore) !== 'undefined') {
             if (parseInt(storage.maxScore) < currentScore) {
@@ -349,14 +395,32 @@ function storeMaxScore(currentScore) {
 }
 
 function endGame() {
+    //shows a game over popup with points information about the ended game and a link to a new game
+    
     if (!storeMaxScore(score)) {
-        $('#main-container').html("").append("<div class='gameOver'><h2>" + MESSAGES.gameOver + "</h2>\n<p>" + MESSAGES.scoreMessage + score + "</p>\n<a href=\"javascript:window.location = window.location;\">New game?</a></div>");
+        $('#boardCont').html("").append("<div class='gameOver'><h2>" + MESSAGES.gameOver + "</h2>\n<p>" + MESSAGES.scoreMessage + score + "</p>\n<a href=\"javascript:window.location = window.location;\">" + MESSAGES.newGame + "</a></div>");
     } else {
-        $('#main-container').html("").append("<div class='gameOver'><h2>" + MESSAGES.gameOver + "</h2>\n<p>" + MESSAGES.scoreMessage + score + "</p>\n" + MESSAGES.bestResult + "</br><a href=\"javascript:window.location = window.location;\">New game?</a></div>");
+        $('#boardCont').html("").append("<div class='gameOver'><h2>" + MESSAGES.gameOver + "</h2>\n<p>" + MESSAGES.scoreMessage + score + "</p>\n" + MESSAGES.bestResult + "</br><a href=\"javascript:window.location = window.location;\">" + MESSAGES.newGame + "</a></div>");
     }
 }
 
-createBackground();
-createScoreBoard();
-createBoard();
-createInfoBox();
+function startGame() {
+    if (!boardContainer) {
+        boardContainer = document.createElement('div');
+        boardContainer.id = boardContainerID;
+        mainContainer.appendChild(boardContainer);
+    }
+
+    $('#boardCont').html("").append("<div class='gameOver'><h2>" + MESSAGES.startGame + "</h2>\n<h4>by Desert Planet</h4><a href=\"javascript:;\" onclick=\"createBoard()\">" + MESSAGES.startGameMsg + "</a></div>");
+}
+
+function initGame() {
+    createBackground();
+    createScoreBoard();
+    startGame();
+    createInfoBox();
+}
+
+$(document).ready(function() {
+    initGame();
+});
