@@ -1,0 +1,7 @@
+- it needs to be responsive and 
+- where the picture of the blond woman is needs to the a responsive parallax slider with different images and different text sliding on at differnent times.
+- The post code part needs to ajax and change the current div to a success or fail div.
+this all MUST be responsive.......you think its something you can do ?
+- and the postcode need to query db (but miro would set that up)
+- oh and last thing the menu needs to go into a slider for anything under 400px
+- http://www.mymobilehairdresser.com.au/

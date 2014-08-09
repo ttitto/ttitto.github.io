@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body{
+            overflow-y: scroll;
+        }
+    </style>
+    <title>My mobile Hairdresser</title>
+    <link rel="stylesheet" href="styles/style.css" type="text/css"/>
+    <link rel="stylesheet" href="styles/jquery.sidr.light.css" type="text/css"/>
+    <script src="scripts/jquery.min.js"></script>
+    <script src="scripts/jquery.sidr.min.js" ></script>
+    <script>
+        $(document).ready(function() {
+            $('#slide-menu-caller').sidr();
+        });
+    </script>
+</head>
+<body>
+<div id="wrapper">
+    <header class="clearfix">
+        <ul class="social-list">
+            <li class="social-list-item"><a href="#" class="social-facebook"></a></li>
+            <li class="social-list-item"><a href="#" class="social-google"></a></li>
+            <li class="social-list-item"><a href="#" class="social-unknown"></a></li>
+            <li class="social-list-item"><a href="#" class="social-pint"></a></li>
+            <li class="social-list-item"><a href="#" class="social-twitter"></a></li>
+        </ul>
+        <div id="phone">1300 85 43 23</div>
+        <img src="images/logo.png" id="top-logo" alt="my mobile hairdresser logo">
+        <nav class="top-nav">
+            <ul class="nav-list">
+                <li><a href="#">about</a></li>
+                <li><a href="#">styles</a></li>
+                <li><a href="#">colors</a></li>
+                <li><a href="#">prices</a></li>
+                <li><a href="#">weddings</a></li>
+                <li><a href="#">testimonials</a></li>
+                <li><a href="#">meet the teem</a></li>
+            </ul>
+        </nav>
+
+
+        <nav id="sidr">
+            <ul>
+                <li><a href="#">about</a></li>
+                <li><a href="#">styles</a></li>
+                <li><a href="#">colors</a></li>
+                <li><a href="#">prices</a></li>
+                <li><a href="#">weddings</a></li>
+                <li><a href="#">testimonials</a></li>
+                <li><a href="#">meet the teem</a></li>
+            </ul>
+        </nav>
+        <a id="slide-menu-caller" href="#sidr">MENU</a>
+    </header>
+
+
+
+    <section class="service-area clearfix">
+        <img src="images/car.png" alt="service car"/>
+        <p>Do we service your area?</p>
+
+        <form id="frm-postcode" action="#" method="get">
+            <input type="text" id="postcode" name="postcode" placeholder="Postcode eg. 5169"/>
+            <input type="submit" id="btn-postcode" value="Check Postcode"/>
+        </form>
+    </section>
+
+    <section class="articles">
+
+        <article id="brides" class="clearfix">
+            <img src="images/left-article-img.png" alt="bride"/>
+            <h2>Brides & Bridesmaids</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquam amet atque culpa dolore eaque, exercitationem, illum impedit libero, nihil nobis quas qui quos temporibus velit. Assumenda consectetur cum dignissimos eveniet, porro provident quae quaerat.</p>
+            <small><a href="#">more info ></a></small>
+        </article>
+
+        <article id="colors-styles"  class="clearfix">
+            <img src="images/middle-article-image.png" alt="colors and styles"/>
+            <h2>Colours & Styles</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquam amet atque culpa dolore eaque, exercitationem, illum impedit libero, nihil nobis quas qui quos temporibus velit. Assumenda consectetur cum dignissimos eveniet, porro provident quae quaerat.</p>
+            <small><a href="#">more info ></a></small>
+        </article>
+
+        <article id="join-success"  class="clearfix">
+            <img src="images/right-article-image.png" alt="join our success"/>
+            <h2>Join our success</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquam amet atque culpa dolore eaque, exercitationem, illum impedit libero, nihil nobis quas qui quos temporibus velit. Assumenda consectetur cum dignissimos eveniet, porro provident quae quaerat.</p>
+            <small><a href="#">more info ></a></small>
+        </article>
+
+    </section>
+</div>
+
+</body>
+</html>
