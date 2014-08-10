@@ -42,15 +42,15 @@ body {
 
 /*HEADER*/
 #wrapper > header {
-    padding-top: 20px;
-    padding-left: 1.1%;
+    padding: 19px 1.4% 0 1.1%;
     background-color: #FFFFFF;
+    margin-bottom: 23px;
 }
 
 header .social-list {
     float: left;
     margin-right: 10.2%;
-    margin-bottom: 35px;
+    margin-bottom: 33px;
 }
 
 header .social-list-item {
@@ -69,11 +69,11 @@ header .social-list .social-facebook {
 }
 
 header .social-list .social-google {
-    background: url('../images/social-sprite.png') 179px 0;
+    background: url('../images/social-sprite.png') 177px 0;
 }
 
 header .social-list .social-unknown {
-    background: url('../images/social-sprite.png') 133px 0;
+    background: url('../images/social-sprite.png') 132px 0;
 }
 
 header .social-list .social-pint {
@@ -102,68 +102,100 @@ header .social-list .social-twitter {
 
 .top-nav .nav-list li {
     display: inline-block;
-    margin-right: 3.7%;
+    margin-right: 3.5%;
 }
 
 .top-nav .nav-list li a {
     font-size: 0.9em;
+    /*text-shadow: 1px 1px #545454;*/
 }
 
 #slide-menu-caller {
     display: none;
 }
 
+/*SECTION PARALLAX SLIDER*/
+.carousel-item {
+
+}
+
+.carousel-caption, #sliding-text {
+    top: 68px;
+    left: -48.30%;
+    color: #c7c7c7;
+}
+
+#sliding-text > p {
+    line-height: 1.6em;
+}
+
+.carousel-caption > .bigger, #sliding-text > .bigger {
+    font-size: 1.8em;
+}
+
+.carousel-caption > .italic, #sliding-text > .italic {
+    font-size: 1.2em;
+    font-style: italic;
+    margin-left: 3.7%;
+}
+.carousel-caption > .bold, #sliding-text > .bold {
+    font-size: 1.5em;
+    font-weight: bolder;
+    margin-left: 3.9%;
+}
 /*SECTION SERVICE_AREA*/
 section.service-area {
     background: #056a7b;
     padding: 25px 2.85%;
-    vertical-align: 45%;
 }
 
 section.service-area > img {
-    width: 26.3%;
+    width: 27.3%;
     margin: 0 auto;
+    vertical-align: 50%;
 }
 
 section.service-area > p {
-    font-size: 2.2em;
+    font-size: 2.4em;
     display: inline-block;
     color: #FFFFFF;
     vertical-align: 50%;
-    margin: 0 2.45%;
+    margin: 0 1.8% 0 3.20%;
 }
 
 section.service-area > form {
     display: inline-block;
-    width: 22%;
+    width: 22.5%;
     margin: 0 auto;
+    vertical-align:text-bottom;
 }
 
 section.service-area > form input {
     width: 100%;
     display: block;
-    border-radius: 8px;
-    padding: 10px 15px;
     margin-bottom: 13px;
+    border: #6b6b6b solid 1px;
     font-size: 0.9em;
 }
 
 #postcode {
-
+    border-radius: 10px;
+    padding: 4px 15px;
 }
 
 #btn-postcode {
     background: #a60066;
     text-align: center;
     color: #FFFFFF;
+    border-radius: 8px;
+    padding: 7px 15px;
 }
 
 /*SECTION ARTICLES*/
 section.articles {
     text-align: center;
-    padding: 10% 0;
+    padding: 9% 0;
     background: url("../images/section-bg.png");
-
 }
 
 section.articles article {
@@ -171,54 +203,72 @@ section.articles article {
     height: 345px;
     padding: 12px 1%;
     margin: 10px 7%;
-
+color: #545454;
     display: inline-block;
     position: relative;
     vertical-align: top;
-    border: black solid thin;
+    border: #6b6b6b solid 1px;
     border-radius: 10px;
-
+    background-color: rgba(255,255,255,0.4);
 }
 
 section.articles article > h2 {
-    font-size: 1em;
+    font-size: 1.1em;
     text-align: left;
+    margin-bottom: 10px;
 }
 
 section.articles article > img {
     position: absolute;
-    bottom: 0;
+    z-index: 10;
+   }
+#left-article>img{
+    bottom: -30px;
     left: -45%;
+}
+#middle-article>img{
+    bottom:0;
+    left:-30%;
+}
+#right-article>img{
+    bottom:0;
+    left:-52%;
 }
 
 section.articles article > p {
-    width: 60%;
+    width: 65%;
     height: 225px;
-    float: right;
     font-size: 0.8em;
     text-align: justify;
     overflow: hidden;
     z-index: 20;
+    position: absolute;
+    right: 4%;
 }
 
 section.articles article > small {
     display: block;
-    width: 100%;
+    width: 80%;
     margin-top: 20px;
     text-align: right;
-    float: right;
+    position: absolute;
+    bottom: 10px;
+    right: 4%;
+    z-index: 1;
 }
 
 section.articles article > small a {
     display: block;
-    padding: 12px 5px 12px 25px;
+    padding: 10px 5px 10px 25px;
     background: #a60066;
+    color: #ffffff;
     width: 100%;
     border-radius: 10px;
+    border:#6b6b6b solid 1px;
 }
 
 /*MEDIA QUERIES*/
-@media (max-width: 1120px) {
+@media (max-width: 1130px) {
     .top-nav .nav-list li {
         margin-right: 2%;
     }
@@ -231,10 +281,9 @@ section.articles article > small a {
         width: 15%;
         font-size: 0.9em;
     }
-
 }
 
-@media (max-width: 960px) {
+@media (max-width: 990px) {
     header .social-list, #phone {
         display: block;
         float: left;
@@ -242,6 +291,19 @@ section.articles article > small a {
 
     header .top-nav {
         width: 100%;
+    }
+    .carousel-caption, #sliding-text {
+    top:25%
+    }
+    .carousel-caption > .bigger, #sliding-text > .bigger {
+        font-size: 1em;
+    }
+
+    .carousel-caption > .italic, #sliding-text > .italic {
+        font-size: 0.6em;
+    }
+    .carousel-caption > .bold, #sliding-text > .bold {
+        font-size: 0.8em;
     }
 
     section.articles article {
@@ -251,7 +313,6 @@ section.articles article > small a {
     section.service-area > form, section.service-area > p {
         display: block;
         float: right;
-
     }
 
     section.service-area > form {
@@ -262,7 +323,6 @@ section.articles article > small a {
         display: inline;
         width: 48%;
     }
-
 }
 
 @media (max-width: 640px) {
@@ -284,26 +344,45 @@ section.articles article > small a {
         margin-bottom: 10px;
     }
 }
+
 @media (max-width: 490px) {
-    .top-nav{
+    .top-nav {
         display: none;
     }
-    #top-logo{
+
+    #top-logo {
         width: 100%;
     }
-     #phone, header .social-list{
+
+    #phone, header .social-list {
         width: 60%;
         font-size: 1.5em;
         float: right;
         margin: 0;
         text-align: center;
     }
-    #slide-menu-caller{
+
+    #slide-menu-caller {
         display: block;
         position: fixed;
+    }
+    #sliding-text > p {
+        line-height: 1em;
+    }
+    .carousel-caption, #sliding-text {
+        top:5%
+    }
+    section.articles article{
+        width: 80%;
+    }
+
+    section.articles article>p{
+        width: 80% ;
     }
 }
 
 @media (max-width: 320px) {
-
+    section.articles article>img{
+        display: none;
+    }
 }
