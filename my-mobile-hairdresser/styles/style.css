@@ -114,35 +114,62 @@ header .social-list .social-twitter {
     display: none;
 }
 
+#slide-menu-caller > img {
+    width: 40px;
+    opacity: 0.5;
+}
+
 /*SECTION PARALLAX SLIDER*/
 .carousel-item {
 
 }
 
-.carousel-caption, #sliding-text {
+.carousel-caption, .sliding-text {
     top: 68px;
     left: -48.30%;
     color: #c7c7c7;
+    display: inline;
 }
 
-#sliding-text > p {
+.sliding-text > p {
     line-height: 1.6em;
 }
 
-.carousel-caption > .bigger, #sliding-text > .bigger {
+.carousel-caption > .bigger, .sliding-text > .bigger {
     font-size: 1.8em;
 }
 
-.carousel-caption > .italic, #sliding-text > .italic {
+.carousel-caption > .italic, .sliding-text > .italic {
     font-size: 1.2em;
     font-style: italic;
     margin-left: 3.7%;
 }
-.carousel-caption > .bold, #sliding-text > .bold {
+
+.carousel-caption > .bold, .sliding-text > .bold {
     font-size: 1.5em;
     font-weight: bolder;
     margin-left: 3.9%;
 }
+
+.sliding {
+    position: absolute;
+    display: table;
+    -webkit-animation: fromRight 900ms linear 1s both;
+    -moz-animation: fromRight 900ms linear 1s both;
+    -ms-animation: fromRight 900ms linear 1s both;
+    -o-animation: fromRight 900ms linear 1s both;
+    animation: fromRight 900ms linear 1s both;
+}
+
+@keyframes fromRight {
+    0% {
+        left: 100%;
+    }
+    100% {
+        left: 10%;
+    }
+}
+
 /*SECTION SERVICE_AREA*/
 section.service-area {
     background: #056a7b;
@@ -167,7 +194,7 @@ section.service-area > form {
     display: inline-block;
     width: 22.5%;
     margin: 0 auto;
-    vertical-align:text-bottom;
+    vertical-align: text-bottom;
 }
 
 section.service-area > form input {
@@ -203,13 +230,13 @@ section.articles article {
     height: 345px;
     padding: 12px 1%;
     margin: 10px 7%;
-color: #545454;
+    color: #545454;
     display: inline-block;
     position: relative;
     vertical-align: top;
     border: #6b6b6b solid 1px;
     border-radius: 10px;
-    background-color: rgba(255,255,255,0.4);
+    background-color: rgba(255, 255, 255, 0.4);
 }
 
 section.articles article > h2 {
@@ -221,18 +248,21 @@ section.articles article > h2 {
 section.articles article > img {
     position: absolute;
     z-index: 10;
-   }
-#left-article>img{
+}
+
+#left-article > img {
     bottom: -30px;
     left: -45%;
 }
-#middle-article>img{
-    bottom:0;
-    left:-30%;
+
+#middle-article > img {
+    bottom: 0;
+    left: -30%;
 }
-#right-article>img{
-    bottom:0;
-    left:-52%;
+
+#right-article > img {
+    bottom: 0;
+    left: -52%;
 }
 
 section.articles article > p {
@@ -264,7 +294,7 @@ section.articles article > small a {
     color: #ffffff;
     width: 100%;
     border-radius: 10px;
-    border:#6b6b6b solid 1px;
+    border: #6b6b6b solid 1px;
 }
 
 /*MEDIA QUERIES*/
@@ -292,17 +322,20 @@ section.articles article > small a {
     header .top-nav {
         width: 100%;
     }
-    .carousel-caption, #sliding-text {
-    top:25%
+
+    .carousel-caption, .sliding-text {
+        top: 25%
     }
-    .carousel-caption > .bigger, #sliding-text > .bigger {
+
+    .carousel-caption > .bigger, .sliding-text > .bigger {
         font-size: 1em;
     }
 
-    .carousel-caption > .italic, #sliding-text > .italic {
+    .carousel-caption > .italic, .sliding-text > .italic {
         font-size: 0.6em;
     }
-    .carousel-caption > .bold, #sliding-text > .bold {
+
+    .carousel-caption > .bold, .sliding-text > .bold {
         font-size: 0.8em;
     }
 
@@ -366,23 +399,26 @@ section.articles article > small a {
         display: block;
         position: fixed;
     }
-    #sliding-text > p {
+
+    .sliding-text p {
         line-height: 1em;
     }
-    .carousel-caption, #sliding-text {
-        top:5%
+
+    .carousel-caption, .sliding-text {
+        top: 5%
     }
-    section.articles article{
+
+    section.articles article {
         width: 80%;
     }
 
-    section.articles article>p{
-        width: 80% ;
+    section.articles article > p {
+        width: 80%;
     }
 }
 
 @media (max-width: 320px) {
-    section.articles article>img{
+    section.articles article > img {
         display: none;
     }
 }
