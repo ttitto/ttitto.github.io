@@ -4,12 +4,11 @@
 
 $('.carousel').on('slid.bs.carousel', function () {
     animationRecall(".sliding");
-    alert("Slide Event");
-})
+});
 
 function animationRecall(className) {
     var slidingEls = $(className);
-    for (var i in slidingEls) {
+    for (var i=0;i<slidingEls.length; i++) {
         var oldEl = slidingEls[i];
         var newEl=oldEl.cloneNode(true);
         oldEl.parentNode.replaceChild(newEl, oldEl);
