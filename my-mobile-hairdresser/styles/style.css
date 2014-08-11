@@ -112,11 +112,13 @@ header .social-list .social-twitter {
 
 #slide-menu-caller {
     display: none;
+    z-index: 100;
+    top: 0;
 }
 
 #slide-menu-caller > img {
     width: 40px;
-    opacity: 0.5;
+    opacity: 0.7;
 }
 
 /*SECTION PARALLAX SLIDER*/
@@ -369,12 +371,17 @@ section.articles article > small a {
 }
 
 @media (max-width: 560px) {
-    body {
-        font-size: 16px;
-    }
-
     header .social-list {
         margin-bottom: 10px;
+    }
+
+    #frm-postcode {
+        width: 100%;
+    }
+
+    #postcode, #btn-postcode {
+        font-size: 0.9em;
+        width: 45%;
     }
 }
 
@@ -388,8 +395,8 @@ section.articles article > small a {
     }
 
     #phone, header .social-list {
-        width: 60%;
-        font-size: 1.5em;
+        width: 90%;
+        font-size: 2.1em;
         float: right;
         margin: 0;
         text-align: center;
@@ -398,6 +405,7 @@ section.articles article > small a {
     #slide-menu-caller {
         display: block;
         position: fixed;
+
     }
 
     .sliding-text p {
@@ -406,6 +414,10 @@ section.articles article > small a {
 
     .carousel-caption, .sliding-text {
         top: 5%
+    }
+
+    #postcode, #btn-postcode {
+        font-size: 0.5em;
     }
 
     section.articles article {
@@ -417,8 +429,21 @@ section.articles article > small a {
     }
 }
 
-@media (max-width: 320px) {
-    section.articles article > img {
-        display: none;
+@media (max-width: 280px) {
+    #phone, header .social-list {
+        width: 100%;
+        font-size: 1.5em;
     }
+
+    header .social-list {
+        margin: 0;
+    }
+
+    header .social-list-item{
+        zoom: 0.7;
+        -moz-transform: scale(0.7);
+        -moz-transform-origin: 0 0;
+        margin-right: -15px;
+    }
+
 }
