@@ -122,53 +122,113 @@ header .social-list .social-twitter {
 }
 
 /*SECTION PARALLAX SLIDER*/
-.carousel-item {
-
+.carousel-inner > .item {
+    -webkit-transition: 1500ms ease-in-out left;
+    -moz-transition: 1500ms ease-in-out left;
+    -o-transition: 1500ms ease-in-out left;
+    transition: 1500ms ease-in-out left;
 }
 
-.carousel-caption, .sliding-text {
+.sliding-bigger {
+    font-size: 1.8em;
     top: 68px;
     left: -48.30%;
     color: #c7c7c7;
-    display: inline;
-}
 
-.sliding-text > p {
-    line-height: 1.6em;
-}
-
-.carousel-caption > .bigger, .sliding-text > .bigger {
-    font-size: 1.8em;
-}
-
-.carousel-caption > .italic, .sliding-text > .italic {
-    font-size: 1.2em;
-    font-style: italic;
-    margin-left: 3.7%;
-}
-
-.carousel-caption > .bold, .sliding-text > .bold {
-    font-size: 1.5em;
-    font-weight: bolder;
-    margin-left: 3.9%;
-}
-
-.sliding {
     position: absolute;
-    display: table;
-    -webkit-animation: fromRight 900ms linear 1s both;
-    -moz-animation: fromRight 900ms linear 1s both;
-    -ms-animation: fromRight 900ms linear 1s both;
-    -o-animation: fromRight 900ms linear 1s both;
-    animation: fromRight 900ms linear 1s both;
+    -webkit-animation: fromRight-bigger 2000ms 250ms both;
+    animation: fromRight-bigger 2000ms 250ms both;
 }
 
-@keyframes fromRight {
+@keyframes fromRight-bigger {
     0% {
         left: 100%;
+        opacity: 0;
+        visibility: hidden;
     }
     100% {
         left: 10%;
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fromRight-bigger {
+    0% {
+        left: 100%;
+        opacity: 0;
+        visibility: hidden;
+    }
+    100% {
+        left: 10%;
+        opacity: 1;
+    }
+}
+
+.sliding-italic {
+    font-size: 1.2em;
+    font-style: italic;
+    top: 120px;
+    left: -50.30%;
+    color: #c7c7c7;
+    position: absolute;
+    -webkit-animation: fromRight-italic 2000ms 500ms both;
+    animation: fromRight-italic 2000ms 500ms both;
+}
+
+@keyframes fromRight-italic {
+    0% {
+        left: 100%;
+        opacity: 0;
+    }
+    100% {
+        left: 15%;
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fromRight-italic {
+    0% {
+        left: 100%;
+        opacity: 0;
+    }
+    100% {
+        left: 15%;
+        opacity: 1;
+    }
+}
+
+.sliding-bold {
+    font-size: 1.5em;
+    font-weight: bolder;
+    top: 150px;
+    left: -48.30%;
+    color: #c7c7c7;
+    position: absolute;
+    -webkit-animation: fromRight-bold 3000ms 750ms both;
+    animation: fromRight-bold 3000ms 750ms both;
+}
+
+@keyframes fromRight-bold {
+    0% {
+        left: 100%;
+        opacity: 0;
+        display: none;
+    }
+    100% {
+        left: 10%;
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fromRight-bold {
+    0% {
+        left: 100%;
+        opacity: 0;
+        display: none;
+    }
+    100% {
+        left: 10%;
+        opacity: 1;
     }
 }
 
@@ -231,7 +291,7 @@ section.articles article {
     width: 18.75%;
     height: 345px;
     padding: 12px 1%;
-    margin: 10px 7%;
+    margin: 20px 7%;
     color: #545454;
     display: inline-block;
     position: relative;
@@ -360,6 +420,20 @@ section.articles article > small a {
     }
 }
 
+@media (max-width: 780px) {
+    .sliding-bigger {
+        top: 15px;
+    }
+
+    .sliding-italic {
+        top: 50px;
+    }
+
+    .sliding-bold {
+        top: 75px;
+    }
+}
+
 @media (max-width: 640px) {
     section.articles article {
         width: 45%;
@@ -405,19 +479,25 @@ section.articles article > small a {
     #slide-menu-caller {
         display: block;
         position: fixed;
-
     }
 
-    .sliding-text p {
-        line-height: 1em;
+    .sliding-bigger {
+        font-size: 1em;
+        top: 5px;
     }
 
-    .carousel-caption, .sliding-text {
-        top: 5%
+    .sliding-italic {
+        font-size: 0.6em;
+        top: 30px;
+    }
+
+    .sliding-bold {
+        font-size: 0.9em;
+        top: 40px;
     }
 
     #postcode, #btn-postcode {
-        font-size: 0.5em;
+        font-size: 0.7em;
     }
 
     section.articles article {
@@ -427,6 +507,20 @@ section.articles article > small a {
     section.articles article > p {
         width: 80%;
     }
+
+    #left-article > img {
+        bottom: -40px;
+        left: -35%;
+    }
+
+    #middle-article > img {
+        left: -10%;
+    }
+
+    #right-article > img {
+
+        left: -32%;
+    }
 }
 
 @media (max-width: 280px) {
@@ -435,15 +529,22 @@ section.articles article > small a {
         font-size: 1.5em;
     }
 
+    #postcode, #btn-postcode {
+        font-size: 0.5em;
+    }
+
     header .social-list {
         margin: 0;
     }
 
-    header .social-list-item{
+    header .social-list-item {
         zoom: 0.7;
         -moz-transform: scale(0.7);
         -moz-transform-origin: 0 0;
         margin-right: -15px;
     }
 
+    section.articles article > small {
+        right: 0;
+    }
 }
