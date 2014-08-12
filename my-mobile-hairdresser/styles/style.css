@@ -492,8 +492,8 @@ section.articles article > small a {
     }
 
     .sliding-bold {
-        font-size: 0.9em;
-        top: 40px;
+        font-size: 0.8em;
+        top: 50px;
     }
 
     #postcode, #btn-postcode {
