@@ -502,6 +502,8 @@ section.articles article > small a {
 
     section.articles article {
         width: 80%;
+        float: right;
+        margin-right: 1px;
     }
 
     section.articles article > p {
@@ -514,12 +516,11 @@ section.articles article > small a {
     }
 
     #middle-article > img {
-        left: -10%;
+        left: -33%;
     }
 
     #right-article > img {
-
-        left: -32%;
+        left: -55%;
     }
 }
 
