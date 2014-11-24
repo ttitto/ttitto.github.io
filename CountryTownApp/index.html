@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Country Towns Application</title>
+    <link rel="stylesheet" href="styles/CountryTownApp.css" type="text/css"/>
+    <script src="libs/jquery-2.1.1.min.js" type="text/javascript"></script>
+    <script src="countryTownApp.js" type="text/javascript"></script>
+</head>
+<body>
+<form>
+    <fieldset id="countries">
+        <legend>Countries</legend>
+        <div class="buttons">
+            <a href="#" id="country-add-btn">Add</a>
+            <a href="#" id="country-del-btn">Delete</a>
+            <a href="#" id="country-edit-btn">Edit</a>
+        </div>
+        <select name="countries" id="countries-list"></select>
+    </fieldset>
+    <fieldset id="towns">
+        <legend>Towns</legend>
+        <div class="buttons">
+            <a href="#" id="town-add-btn">Add</a>
+            <a href="#" id="town-del-btn">Delete</a>
+            <a href="#" id="town-edit-btn">Edit</a>
+        </div>
+        <select name="towns" id="towns-list" multiple="multiple"></select>
+    </fieldset>
+</form>
+</body>
+</html>

@@ -1,0 +1,29 @@
+a{
+    text-decoration: none;
+    color: black;
+    padding: 5px;
+    margin: 3px;
+    background-color: lawngreen;
+}
+form fieldset{
+    padding-top: 35px;
+    width: 20%;
+    display: inline-block;
+    vertical-align: top;
+    background-color: yellowgreen;
+}
+legend{
+    position: absolute;
+    top:10px;
+    font-size: 1.3em;
+}
+select{
+    min-width: 80%;
+    display: block;
+    margin: 10px 0;
+    background-color: lightgoldenrodyellow;
+}
+input{
+    margin: 10px 0;
+    background-color: lightgoldenrodyellow;
+}
